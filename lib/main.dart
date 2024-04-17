@@ -44,7 +44,7 @@ class _BattleshipPageState extends State<BattleshipPage> {
             color: Colors.black,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 255, 164, 28),
+        backgroundColor: Color.fromARGB(255, 53, 128, 160),
       ),
       backgroundColor: Color.fromARGB(255, 225, 225, 225),
       body: Center(
@@ -111,7 +111,7 @@ class _BattleshipPageState extends State<BattleshipPage> {
                   child: const Text(
                     'Login',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 255, 164, 28),
+                      color: Color.fromARGB(255, 106, 188, 181),
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                     ),
@@ -144,7 +144,7 @@ class _BattleshipPageState extends State<BattleshipPage> {
                   child: const Text(
                     'Register',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 255, 164, 28),
+                      color: Color.fromARGB(255, 106, 188, 181),
                       fontWeight: FontWeight.bold,
                       fontSize: 15,
                     ),
