@@ -42,7 +42,7 @@ class _BattleshipPageState extends State<BattleshipPage> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
-                  'https://wallpapercave.com/uwp/uwp3828149.png',
+                  'https://as1.ftcdn.net/v2/jpg/08/46/53/06/1000_F_846530675_YrUtfigUitqAOTaPgp6eon3lK6tAQr4j.jpg',
                 ), // Replace with your image URL
                 fit: BoxFit.cover,
               ),
@@ -54,7 +54,8 @@ class _BattleshipPageState extends State<BattleshipPage> {
               padding: EdgeInsets.all(20.0),
               margin: EdgeInsets.symmetric(horizontal: 40.0),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5), // Adds transparency to the background color
+                color: Colors.black.withOpacity(
+                    0.5), // Adds transparency to the background color
                 borderRadius: BorderRadius.circular(25.0),
               ),
               child: Column(
@@ -83,11 +84,13 @@ class _BattleshipPageState extends State<BattleshipPage> {
                         fillColor: Colors.white.withOpacity(0.1),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: const Color.fromARGB(255, 59, 213, 255)), 
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 59, 213, 255)),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: const Color.fromARGB(255, 59, 190, 255)), 
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 59, 190, 255)),
                         ),
                       ),
                       style: TextStyle(color: Colors.white),
@@ -108,11 +111,13 @@ class _BattleshipPageState extends State<BattleshipPage> {
                         fillColor: Colors.white.withOpacity(0.1),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white), // White border color
+                          borderSide: BorderSide(
+                              color: Colors.white), // White border color
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.white), // White border color
+                          borderSide: BorderSide(
+                              color: Colors.white), // White border color
                         ),
                       ),
                       style: TextStyle(color: Colors.white),
@@ -125,7 +130,8 @@ class _BattleshipPageState extends State<BattleshipPage> {
                       final username = usernameController.text;
                       final password = passwordController.text;
                       try {
-                        final response = await widget.authService.registerUser(username, password);
+                        final response = await widget.authService
+                            .registerUser(username, password);
                         if (response.containsKey('message')) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -145,7 +151,8 @@ class _BattleshipPageState extends State<BattleshipPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
-                      padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 50.0, vertical: 15.0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),

@@ -132,8 +132,8 @@ class _GameScreenState extends State<GameScreen> {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image:
-                  NetworkImage('https://wallpapercave.com/uwp/uwp3828149.png'),
+              image: NetworkImage(
+                  'https://as1.ftcdn.net/v2/jpg/08/46/53/06/1000_F_846530675_YrUtfigUitqAOTaPgp6eon3lK6tAQr4j.jpg'),
               fit: BoxFit.cover,
             ),
           ),
@@ -250,7 +250,8 @@ class _GameScreenState extends State<GameScreen> {
                                             .blue) // Show bubble icon for sunked ships
                                     : isShot
                                         ? const Icon(Icons.fireplace,
-                                            color: Color.fromARGB(255, 88, 168, 172)) // Show fire icon for shots
+                                            color: Color.fromARGB(255, 88, 168,
+                                                172)) // Show fire icon for shots
                                         : null, // No icon if no ship or sunk
                       ),
                     ),
