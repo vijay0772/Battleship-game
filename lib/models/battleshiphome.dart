@@ -205,7 +205,6 @@ class _LoggedInScreenState extends State<LoggedInScreen> {
                         SimpleDialogOption(
                           onPressed: () async {
                             Navigator.of(context).pop();
-                            // navigateToGameScreen('Option 1');
                             final result = await Navigator.of(context)
                                 .push(MaterialPageRoute(
                               builder: (context) => NewGameScreen(
@@ -278,90 +277,109 @@ class _LoggedInScreenState extends State<LoggedInScreen> {
         ),
       ),
       backgroundColor: Color.fromARGB(255, 225, 225, 225),
-      body: ListView.builder(
-          itemCount: ongoingGames.length,
-          itemBuilder: (BuildContext context, int index) {
-            final game = ongoingGames[index];
-            final player1 = game['player1'];
-            final player2 = game['player2'];
-            final currentPlayer = game['turn'] == 1 ? player1 : player2;
-            final isYourTurn = currentPlayer == widget.user_name;
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(
+                    'https://wallpapercave.com/wp/wp12532312.jpg'), // Your image URL
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          // Content
+          ListView.builder(
+            itemCount: ongoingGames.length,
+            itemBuilder: (BuildContext context, int index) {
+              final game = ongoingGames[index];
+              final player1 = game['player1'];
+              final player2 = game['player2'];
+              final currentPlayer = game['turn'] == 1 ? player1 : player2;
+              final isYourTurn = currentPlayer == widget.user_name;
 
-            return Dismissible(
-              key: Key(game['id'].toString()),
-              direction: DismissDirection.endToStart,
-              background: Container(
-                color: Colors.red,
-                child: const Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 16),
-                    child: Text(
-                      'Delete',
-                      style: TextStyle(color: Colors.white),
+              return Dismissible(
+                key: Key(game['id'].toString()),
+                direction: DismissDirection.endToStart,
+                background: Container(
+                  color: Colors.red,
+                  child: const Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 16),
+                      child: Text(
+                        'Delete',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              onDismissed: (direction) async {
-                setState(() {
-                  ongoingGames.removeAt(index);
-                });
-                try {
-                  await authService.gameDelete(game['id'], widget.access_token);
-                } catch (error) {
+                onDismissed: (direction) async {
+                  setState(() {
+                    ongoingGames.removeAt(index);
+                  });
+                  try {
+                    await authService.gameDelete(
+                        game['id'], widget.access_token);
+                  } catch (error) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            'Failed to delete game. Please try again later.'),
+                      ),
+                    );
+                    print('Error deleting game: $error');
+                  }
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                          'Failed to delete game. Please try again later.'),
+                    SnackBar(
+                      content: Text('Game ${game['id']} deleted'),
                     ),
                   );
-                  print('Error deleting game: $error');
-                }
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Game ${game['id']} deleted'),
-                  ),
-                );
-              },
-              child: ListTile(
-                title: Row(
-                  children: [
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          style: DefaultTextStyle.of(context).style,
-                          children: [
-                            TextSpan(
-                                text: 'Game ID: ${game['id']} - ',
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text: '$player1 vs $player2',
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold)),
-                          ],
+                },
+                child: ListTile(
+                  title: Row(
+                    children: [
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: DefaultTextStyle.of(context).style,
+                            children: [
+                              TextSpan(
+                                  text: 'Game ID: ${game['id']} - ',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text: '$player1 vs $player2',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Text(
-                      isYourTurn ? 'Your turn' : 'Opponent\'s turn',
-                      style: TextStyle(
-                        color: isYourTurn
-                            ? const Color.fromARGB(255, 72, 202, 143)
-                            : const Color.fromARGB(255, 255, 81, 69),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
+                      Text(
+                        isYourTurn ? 'Your turn' : 'Opponent\'s turn',
+                        style: TextStyle(
+                          color: isYourTurn
+                              ? const Color.fromARGB(255, 72, 202, 143)
+                              : const Color.fromARGB(255, 255, 81, 69),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
+                  onTap: () {
+                    showGameDetails(game['id']);
+                  },
                 ),
-                onTap: () {
-                  showGameDetails(game['id']);
-                },
-              ),
-            );
-          }),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,5 @@
-import 'package:battleships/Utils/Authorization.dart';
 import 'package:flutter/material.dart';
-
+import 'package:battleships/Utils/Authorization.dart';
 import 'models/battleshiphome.dart';
 
 void main() {
@@ -36,124 +35,175 @@ class _BattleshipPageState extends State<BattleshipPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Login',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.black,
+      body: Stack(
+        children: [
+          // Background image
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(
+                  'https://wallpapercave.com/uwp/uwp3828149.png',
+                ), // Replace with your image URL
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
-        ),
-        backgroundColor: Color.fromARGB(255, 53, 128, 160),
-      ),
-      backgroundColor: Color.fromARGB(255, 225, 225, 225),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 30.0), // Adjust the padding as needed
-              child: TextField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                ),
+          // Form Container
+          Center(
+            child: Container(
+              padding: EdgeInsets.all(20.0),
+              margin: EdgeInsets.symmetric(horizontal: 40.0),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5), // Adds transparency to the background color
+                borderRadius: BorderRadius.circular(25.0),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 30.0), // Adjust the padding as needed
-              child: TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    final username = usernameController.text;
-                    final password = passwordController.text;
-                    try {
-                      final response = await widget.authService.loginUser(
-                        username,
-                        password,
-                      );
-                      if (response.containsKey('message')) {
-                        // ignore: use_build_context_synchronously
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Login successful'),
-                          ),
-                        );
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LoggedInScreen(
-                              user_name: username,
-                              access_token: response['access_token']),
-                        ));
-                      }
-                    } catch (e) {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('$e'),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text(
-                    'Login',
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  // Title
+                  const Text(
+                    'Battleship',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 106, 188, 181),
+                      fontSize: 25,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    final username = usernameController.text;
-                    final password = passwordController.text;
-                    try {
-                      final response = await widget.authService
-                          .registerUser(username, password);
-                      if (response.containsKey('message')) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('User created successfully'),
-                          ),
-                        );
-                      } else {
-                        throw Exception(response['error']);
-                      }
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('$e'),
+                  const SizedBox(height: 30.0),
+                  // Username Field
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    child: TextField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.person, color: Colors.white),
+                        labelText: 'Username',
+                        labelStyle: TextStyle(color: Colors.white),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: const Color.fromARGB(255, 59, 213, 255)), 
                         ),
-                      );
-                    }
-                  },
-                  child: const Text(
-                    'Register',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 106, 188, 181),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: const Color.fromARGB(255, 59, 190, 255)), 
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20.0),
+                  // Password Field
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.lock, color: Colors.white),
+                        labelText: 'Password',
+                        labelStyle: TextStyle(color: Colors.white),
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.1),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.white), // White border color
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.white), // White border color
+                        ),
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(height: 30.0),
+                  // Register Button
+                  ElevatedButton(
+                    onPressed: () async {
+                      final username = usernameController.text;
+                      final password = passwordController.text;
+                      try {
+                        final response = await widget.authService.registerUser(username, password);
+                        if (response.containsKey('message')) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('User created successfully'),
+                            ),
+                          );
+                        } else {
+                          throw Exception(response['error']);
+                        }
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('$e'),
+                          ),
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 59, 213, 255),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  // Login Button
+                  TextButton(
+                    onPressed: () async {
+                      final username = usernameController.text;
+                      final password = passwordController.text;
+                      try {
+                        final response = await widget.authService.loginUser(
+                          username,
+                          password,
+                        );
+                        if (response.containsKey('message')) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Login successful'),
+                            ),
+                          );
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => LoggedInScreen(
+                                user_name: username,
+                                access_token: response['access_token']),
+                          ));
+                        }
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('$e'),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
