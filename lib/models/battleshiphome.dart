@@ -284,7 +284,7 @@ class _LoggedInScreenState extends State<LoggedInScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(
-                    'https://wallpapercave.com/wp/wp12532312.jpg'), // Your image URL
+                    'https://images4.alphacoders.com/133/1333662.png'), // Your image URL
                 fit: BoxFit.cover,
               ),
             ),
@@ -348,11 +348,13 @@ class _LoggedInScreenState extends State<LoggedInScreen> {
                               TextSpan(
                                   text: 'Game ID: ${game['id']} - ',
                                   style: TextStyle(
+                                      color: Colors.white,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold)),
                               TextSpan(
                                   text: '$player1 vs $player2',
                                   style: TextStyle(
+                                      color: Colors.white,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold)),
                             ],

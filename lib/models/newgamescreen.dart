@@ -72,7 +72,7 @@ class _NewGameScreenState extends State<NewGameScreen> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(
-                  'https://wallpapercave.com/uwp/uwp3828149.png'), // Replace with your image URL
+                  'https://as1.ftcdn.net/v2/jpg/08/46/53/06/1000_F_846530675_YrUtfigUitqAOTaPgp6eon3lK6tAQr4j.jpg'), // Replace with your image URL
               fit: BoxFit.cover,
             ),
           ),
@@ -157,7 +157,8 @@ class _NewGameScreenState extends State<NewGameScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       color: selectedTiles.contains(tileName)
-                          ? Color.fromARGB(255, 71, 254, 5).withOpacity(0.5) // Selected color
+                          ? Color.fromARGB(255, 71, 254, 5)
+                              .withOpacity(0.5) // Selected color
                           : _hoveredTile == tileName
                               ? Colors.grey.withOpacity(0.5) // Hovered color
                               : Color.fromARGB(255, 116, 198, 230)
